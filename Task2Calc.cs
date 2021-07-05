@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Net_Salart_Calc
 {
@@ -13,16 +13,20 @@ namespace Net_Salart_Calc
             Console.WriteLine("Please Input Gross Salary Value");
             string GrossINput = Console.ReadLine();
             int GrossValue = Convert.ToInt32(GrossINput);
-            if(GrossValue >= LowestTaxableAmount)//Income is same or higher then Taxable amount defined.
+            if (GrossValue >= LowestTaxableAmount)//Income is same or higher then Taxable amount defined.
             {
-                int TaxValue = Convert.ToInt32(Math.Round(((decimal)IncomTax / 100) * GrossValue,0));
+                int TaxValue = Convert.ToInt32(Math.Round(((decimal)IncomTax / 100) * GrossValue, 0));
 
                 Console.WriteLine("Salary After Incom Tax Of : " + IncomTax + "% Is: " + TaxValue);
                 GrossValue = GrossValue - TaxValue;//update
-
-                int SociCon = Convert.ToInt32(Math.Round(((decimal)SocialContributionsPercent / 100) * GrossValue, 0));
-                Console.WriteLine("Salary After Social Contributions Of : " + SocialContributionsPercent + "% Is: " + SociCon);
-                GrossValue = GrossValue - SociCon;
+                int SociCon = 0;
+                if (GrossValue <= MAXContributions)
+                {
+                    SociCon = Convert.ToInt32(Math.Round(((decimal)SocialContributionsPercent / 100) * GrossValue, 0));
+                    Console.WriteLine("Salary After Social Contributions Of : " + SocialContributionsPercent + "% Is: " + SociCon);
+                    GrossValue = GrossValue - SociCon;
+                }
+                else Console.WriteLine("Contributions Do Not Applly");                
                 Console.WriteLine("Total Tax Amount : " + (TaxValue + SociCon));
                 Console.WriteLine("Final Pay : " + GrossValue);
             }
